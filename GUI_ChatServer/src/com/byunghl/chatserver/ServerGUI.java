@@ -43,7 +43,7 @@ public class ServerGUI extends JFrame implements Observer{
 	private void initGUI() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 280, 400);
+		setBounds(100, 100, 280, 399);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 		setContentPane(contentPane);
@@ -65,7 +65,7 @@ public class ServerGUI extends JFrame implements Observer{
 		textField.setColumns(10);
 		
 		JLabel portLabel = new JLabel("Port Number");
-		portLabel.setBounds(12, 264, 98, 37);
+		portLabel.setBounds(12, 264, 75, 37);
 		contentPane.add(portLabel);
 		
 		startButton = new JButton("Run Server");
