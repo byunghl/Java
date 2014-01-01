@@ -25,7 +25,8 @@ public class Server implements Observerable {
 	public void startServer() {
 		try {
 			serverSocket = new ServerSocket(portNumber);
-			ConnectionMessage message = new ConnectionMessage("Server started!\nServer is running. PORT:"+portNumber, true);
+			
+			ConnectionMessage message = new ConnectionMessage("Server started!\nServer is running. PORT:"+portNumber+"\n", true);
 			notifyObservers(message);
 			
 			if(serverSocket != null) {

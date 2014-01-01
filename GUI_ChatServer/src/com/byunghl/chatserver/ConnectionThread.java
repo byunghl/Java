@@ -9,13 +9,13 @@ public class ConnectionThread implements Runnable, Observerable {
 
 	private Socket socket;
 	private ServerSocket serverSocket;
-	private Vector vc;
+	private Vector<UserInfo> vc;
 	private ArrayList<Observer> observers; 
 	private String message;
 	private ThreadMessage tm;
 	
 	
-	public ConnectionThread(Socket socket, ServerSocket serverSocket, ArrayList<Observer> observers, Vector vc) {
+	public ConnectionThread(Socket socket, ServerSocket serverSocket, ArrayList<Observer> observers, Vector<UserInfo> vc) {
 		this.socket = socket;
 		this.serverSocket = serverSocket;
 		this.observers = observers;
@@ -28,12 +28,21 @@ public class ConnectionThread implements Runnable, Observerable {
 	public void run() {
 		while(true) {
 			try{
-				message = "\nWating for connections";
+				message = "Wating for connections\n";
 				setMessage(getMessage());
 				socket = serverSocket.accept();
-				message = "\nUser is connected";
+				message = "User is connected\n";
 				setMessage(getMessage());
-			}catch(Exception ex){}
+				
+				UserInfo user = new UserInfo(socket, observers, vc);
+				vc.add(user);
+				user.start();
+				
+			}catch(Exception ex){
+				message = "!!!! Accept error occured !!!!\n";
+				setMessage(getMessage());
+				ex.printStackTrace();
+			}
 		}
 	}
 
@@ -54,7 +63,7 @@ public class ConnectionThread implements Runnable, Observerable {
 	@Override
 	public void notifyObservers(Message message) {
 		for(int i =0; i < observers.size(); i++) {
-			Observer observer = (Observer)observers.get(i);
+			Observer observer = observers.get(i);
 			observer.update(message);
 		}
 		
